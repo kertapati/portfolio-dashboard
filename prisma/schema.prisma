@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Setting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+model Wallet {
+  id        String   @id @default(cuid())
+  chainType String
+  address   String
+  label     String?
+  createdAt DateTime @default(now())
+
+  evmAllowlist EvmTokenAllowlist[]
+  solAllowlist SolTokenAllowlist[]
+}
+
+model EvmTokenAllowlist {
+  id              String  @id @default(cuid())
+  walletId        String
+  contractAddress String
+  symbol          String?
+  decimals        Int?
+  coingeckoId     String?
+
+  wallet Wallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+
+  @@unique([walletId, contractAddress])
+}
+
+model SolTokenAllowlist {
+  id          String  @id @default(cuid())
+  walletId    String?
+  mintAddress String
+  symbol      String?
+  coingeckoId String?
+
+  wallet Wallet? @relation(fields: [walletId], references: [id], onDelete: Cascade)
+
+  @@unique([walletId, mintAddress])
+}
+
+model ManualAsset {
+  id                  String    @id @default(cuid())
+  type                String
+  name                String
+  valueAud            Float
+  currency            String    @default("AUD")
+  quantity            Float?
+  notes               String?
+  updatedAt           DateTime  @updatedAt
+  investmentDate      DateTime?
+  investmentAmount    Float?
+  investmentValuation Float?
+  tradfiSystem        Boolean   @default(false)
+  exposureType        String?
+}
+
+model PriceCache {
+  assetKey    String   @id
+  symbol      String
+  coingeckoId String?
+  priceUsd    Float
+  fetchedAt   DateTime
+}
+
+model Snapshot {
+  id              String   @id @default(cuid())
+  createdAt       DateTime @default(now())
+  fxUsdAud        Float
+  totalAud        Float
+  cashAud         Float
+  cryptoAud       Float
+  collectiblesAud Float
+  evmTotalAud     Float
+  solTotalAud     Float
+  manualTotalAud  Float
+
+  holdings SnapshotHolding[]
+
+  @@index([createdAt])
+}
+
+model SnapshotHolding {
+  id            String  @id @default(cuid())
+  snapshotId    String
+  assetKey      String
+  source        String
+  walletId      String?
+  symbol        String
+  quantity      Float
+  priceUsd      Float?
+  valueAud      Float
+  liquidityTier String
+  exposureType  String  @default("CRYPTO")
+
+  snapshot Snapshot @relation(fields: [snapshotId], references: [id], onDelete: Cascade)
+
+  @@index([snapshotId])
+}
+
+model Brief {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  reportType  String   // 'weekly' or 'deep-dive'
+  snapshotId  String   // Reference to the snapshot this report is for
+  data        String   // JSON string of WeeklyBriefData or DeepDiveData
+  content     String?  // Optional markdown content for backwards compatibility
+
+  @@index([createdAt])
+}

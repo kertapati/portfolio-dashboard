@@ -1,0 +1,25 @@
+<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Base/platform -->
+  <rect x="60" y="388" width="380" height="52" rx="26" fill="#00332B"/>
+
+  <!-- Bar 1 (shortest) -->
+  <rect x="86" y="288" width="90" height="76" rx="20" fill="#00332B"/>
+
+  <!-- Bar 2 (medium) -->
+  <rect x="205" y="238" width="90" height="126" rx="20" fill="#00332B"/>
+
+  <!-- Bar 3 (tallest) -->
+  <rect x="324" y="188" width="90" height="176" rx="20" fill="#00332B"/>
+
+  <!-- Trend line -->
+  <path d="M 112 244 L 194 138 L 250 204 L 345 88"
+        stroke="#00332B"
+        stroke-width="32"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        fill="none"/>
+
+  <!-- Arrow -->
+  <path d="M 345 88 L 301 61 L 345 61 L 389 88 L 389 148 L 345 148 Z"
+        fill="#00332B"/>
+</svg>

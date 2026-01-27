@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Apple-tier premium light theme with proper surface layering */
+    --background: 210 17% 97%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 189 75% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 20% 94%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 210 20% 94%;
+    --muted-foreground: 215 14% 48%;
+    --accent: 189 75% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 60% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 20% 88%;
+    --input: 214 20% 88%;
+    --ring: 189 75% 45%;
+    --radius: 0.875rem;
+    --success: 142 55% 48%;
+    --warning: 38 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1, "tnum" 1;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+    font-feature-settings: "tnum" 1;
+  }
+
+  h1 {
+    @apply text-3xl;
+  }
+
+  h2 {
+    @apply text-2xl;
+  }
+
+  h3 {
+    @apply text-xl;
+  }
+}
+
+@layer components {
+  /* Apple-tier card surface with proper elevation */
+  .premium-card {
+    @apply bg-card border border-border/50 rounded-[14px];
+    box-shadow:
+      0 1px 2px 0 rgba(0, 0, 0, 0.03),
+      0 1px 3px 0 rgba(0, 0, 0, 0.02);
+  }
+
+  /* Tabular numbers for all numeric values */
+  .tabular-nums {
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* Typography scale */
+  .text-page-title {
+    @apply text-[28px] sm:text-[32px] font-semibold tracking-tight;
+  }
+
+  .text-section-title {
+    @apply text-base sm:text-[17px] font-semibold tracking-tight;
+  }
+
+  .text-label {
+    @apply text-[12px] font-medium text-muted-foreground uppercase tracking-wide;
+  }
+
+  .text-financial {
+    @apply text-2xl font-semibold tabular-nums tracking-tight;
+  }
+
+  /* Navigation bar */
+  .app-nav {
+    @apply bg-card border-b border-border/50;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+  }
+
+  /* Financial widget styling */
+  .financial-widget {
+    @apply premium-card p-5;
+  }
+
+  /* Badge variants */
+  .badge-immediate {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-medium bg-green-50 text-green-700 border border-green-200/50;
+  }
+
+  .badge-fast {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-medium bg-blue-50 text-blue-700 border border-blue-200/50;
+  }
+
+  .badge-slow {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200/50;
+  }
+}
