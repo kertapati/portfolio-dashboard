@@ -158,7 +158,7 @@ export default function DashboardPage() {
   const fxRate = snapshot?.fxUsdAud || 1.5
 
   const tradfiSystemValue = useMemo(() => {
-    return manualAssets
+    return (manualAssets || [])
       .filter(asset => asset.tradfiSystem)
       .reduce((sum, asset) => {
         const quantity = asset.quantity !== null && asset.quantity !== undefined ? asset.quantity : 1
@@ -186,7 +186,7 @@ export default function DashboardPage() {
   }
 
   const assetAllocation = useMemo(() => {
-    if (!snapshot) return []
+    if (!snapshot || !snapshot.holdings) return []
 
     // Group holdings by exposureType
     const exposureGroups: Record<string, number> = {}
@@ -274,13 +274,13 @@ export default function DashboardPage() {
 
   // Prepare holdings data - manual assets are already included in snapshot.holdings by backend
   const allHoldings = useMemo(() => {
-    if (!snapshot) return []
+    if (!snapshot || !snapshot.holdings) return []
     return topExposures.flatMap(exp => {
       return snapshot.holdings
         .filter(h => h.assetKey === exp.assetKey && h.source !== 'AIRDROP' && h.source !== 'PRIVATE_INVESTMENT')
         .map(holding => {
-          const manualAsset = manualAssets.find(a => holding.symbol === a.name)
-          const wallet = holding.walletId ? wallets.find(w => w.id === holding.walletId) : null
+          const manualAsset = (manualAssets || []).find(a => holding.symbol === a.name)
+          const wallet = holding.walletId ? (wallets || []).find(w => w.id === holding.walletId) : null
           return {
             holding,
             manualAsset,
@@ -837,7 +837,7 @@ export default function DashboardPage() {
       )}
 
       {/* Private Investments */}
-      {manualAssets.filter(a => a.type === 'PRIVATE_INVESTMENT').length > 0 && (
+      {(manualAssets || []).filter(a => a.type === 'PRIVATE_INVESTMENT').length > 0 && (
         <div className="premium-card p-6 space-y-4">
           <SectionHeader
             title="Private Investments"
@@ -855,7 +855,7 @@ export default function DashboardPage() {
               </DataTableRow>
             </DataTableHeader>
             <DataTableBody>
-              {manualAssets.filter(a => a.type === 'PRIVATE_INVESTMENT').map((investment) => {
+              {(manualAssets || []).filter(a => a.type === 'PRIVATE_INVESTMENT').map((investment) => {
                 const formatWithCurrency = (value: number) => {
                   return new Intl.NumberFormat('en-US', {
                     style: 'currency',
@@ -888,7 +888,7 @@ export default function DashboardPage() {
       )}
 
       {/* Expected Airdrops */}
-      {manualAssets.filter(a => a.type === 'AIRDROP').length > 0 && (
+      {(manualAssets || []).filter(a => a.type === 'AIRDROP').length > 0 && (
         <div className="premium-card p-6 space-y-4">
           <SectionHeader
             title="Expected Airdrops"
@@ -902,7 +902,7 @@ export default function DashboardPage() {
               </DataTableRow>
             </DataTableHeader>
             <DataTableBody>
-              {manualAssets.filter(a => a.type === 'AIRDROP').map((airdrop) => (
+              {(manualAssets || []).filter(a => a.type === 'AIRDROP').map((airdrop) => (
                 <DataTableRow key={airdrop.id}>
                   <DataTableCell className="font-medium">{airdrop.name}</DataTableCell>
                   <DataTableCell className="text-muted-foreground text-xs">{airdrop.notes || '-'}</DataTableCell>
@@ -996,7 +996,7 @@ export default function DashboardPage() {
 function calculateTopExposures(snapshot: SnapshotWithHoldings): TopExposure[] {
   const grouped = new Map<string, { valueAud: number; symbol: string }>()
 
-  for (const holding of snapshot.holdings) {
+  for (const holding of (snapshot.holdings || [])) {
     const existing = grouped.get(holding.assetKey)
     if (existing) {
       existing.valueAud += holding.valueAud
@@ -1019,7 +1019,7 @@ function calculateTopExposures(snapshot: SnapshotWithHoldings): TopExposure[] {
 }
 
 function getUnpricedAssets(snapshot: SnapshotWithHoldings) {
-  const unpriced = snapshot.holdings.filter(h => h.priceUsd === null || h.priceUsd === 0)
+  const unpriced = (snapshot.holdings || []).filter(h => h.priceUsd === null || h.priceUsd === 0)
   const grouped = new Map<string, any>()
 
   for (const holding of unpriced) {
@@ -1057,7 +1057,7 @@ function getConcentrationWarnings(topExposures: TopExposure[], totalAud: number)
 }
 
 function calculateRunway(snapshot: SnapshotWithHoldings): number {
-  const immediateAndFast = snapshot.holdings
+  const immediateAndFast = (snapshot.holdings || [])
     .filter(h => h.liquidityTier === 'IMMEDIATE' || h.liquidityTier === 'FAST')
     .reduce((sum, h) => sum + h.valueAud, 0)
 
