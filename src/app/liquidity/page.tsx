@@ -287,7 +287,7 @@ export default function LiquidityPage() {
   const totalStablecoins = stablecoinHoldings.reduce((sum, h) => sum + h.valueAud, 0)
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-12">
       <h1 className="text-page-title">Liquidity & Runway</h1>
 
       {/* Compact Runway Overview */}

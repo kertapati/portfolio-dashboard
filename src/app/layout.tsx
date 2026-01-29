@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"
 import Link from "next/link"
 import Image from "next/image"
 import "./globals.css"
+import { MobileNav } from "@/components/mobile-nav"
 
 const inter = Inter({ subsets: ["latin"], variable: '--font-inter' })
 
@@ -18,6 +19,14 @@ export const metadata: Metadata = {
   },
 }
 
+const navLinks = [
+  { href: "/", label: "Dashboard" },
+  { href: "/history", label: "Analytics" },
+  { href: "/briefs", label: "Intelligence" },
+  { href: "/liquidity", label: "Liquidity" },
+  { href: "/settings", label: "Data" },
+]
+
 export default function RootLayout({
   children,
 }: {
@@ -28,7 +37,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="min-h-screen flex flex-col">
           <header className="app-nav sticky top-0 z-50">
-            <div className="container mx-auto px-6 py-3">
+            <div className="container mx-auto px-4 sm:px-6 py-3">
               <nav className="flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-2.5">
                   <Image
@@ -42,17 +51,20 @@ export default function RootLayout({
                     Portfolio
                   </span>
                 </Link>
-                <div className="flex gap-0.5">
-                  <NavLink href="/">Dashboard</NavLink>
-                  <NavLink href="/history">Analytics / History</NavLink>
-                  <NavLink href="/briefs">Intelligence / Reports</NavLink>
-                  <NavLink href="/liquidity">Liquidity</NavLink>
-                  <NavLink href="/settings">Data</NavLink>
+                {/* Desktop navigation */}
+                <div className="hidden md:flex gap-0.5">
+                  {navLinks.map((link) => (
+                    <NavLink key={link.href} href={link.href}>
+                      {link.label}
+                    </NavLink>
+                  ))}
                 </div>
+                {/* Mobile navigation */}
+                <MobileNav links={navLinks} />
               </nav>
             </div>
           </header>
-          <main className="flex-1 container mx-auto px-6 py-6 sm:py-8">
+          <main className="flex-1 container mx-auto px-4 sm:px-6 py-6 sm:py-8">
             {children}
           </main>
         </div>

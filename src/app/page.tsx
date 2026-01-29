@@ -615,7 +615,7 @@ export default function DashboardPage() {
           title="Holdings"
           description={`${filteredAndSortedHoldings.length} of ${allHoldings.length} positions`}
           action={
-            <div className="flex items-center gap-2">
+            <>
               <div className="relative">
                 <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
                 <Input
@@ -623,7 +623,7 @@ export default function DashboardPage() {
                   placeholder="Search..."
                   value={holdingsSearch}
                   onChange={(e) => setHoldingsSearch(e.target.value)}
-                  className="h-7 w-40 text-xs pl-7 rounded-lg"
+                  className="h-7 w-full sm:w-40 text-xs pl-7 rounded-lg"
                 />
               </div>
               <select
@@ -655,7 +655,7 @@ export default function DashboardPage() {
                   </>
                 )}
               </Button>
-            </div>
+            </>
           }
         />
 

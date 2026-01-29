@@ -110,30 +110,34 @@ export default function ReportsPage() {
   const historicalBriefs = briefs.slice(1)
 
   return (
-    <div className="container mx-auto p-6 max-w-7xl space-y-6">
+    <div className="space-y-6 pb-12">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Portfolio Intelligence</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Portfolio Intelligence</h1>
+          <p className="text-muted-foreground mt-1 text-sm">
             Actionable insights and health metrics
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Button
             onClick={() => handleGenerate('weekly')}
             disabled={generating}
             variant="outline"
+            size="sm"
+            className="flex-1 sm:flex-none"
           >
             {generating ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
-            Generate Weekly Brief
+            Weekly Brief
           </Button>
           <Button
             onClick={() => handleGenerate('deep-dive')}
             disabled={generating}
+            size="sm"
+            className="flex-1 sm:flex-none"
           >
             {generating ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
-            Generate Deep Dive
+            Deep Dive
           </Button>
         </div>
       </div>
@@ -266,12 +270,12 @@ function PortfolioHealthPanel({ scores }: { scores: HealthScores }) {
         <CardTitle className="text-section-title">Portfolio Health Score</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-6 md:grid-cols-5">
+        <div className="flex flex-col md:flex-row md:items-start gap-6">
           {/* Overall Score - Large circular gauge */}
-          <div className="flex flex-col items-center justify-center">
-            <div className={`relative w-32 h-32 rounded-full ${scoreBg} flex items-center justify-center`}>
+          <div className="flex flex-col items-center justify-center mx-auto md:mx-0">
+            <div className={`relative w-28 h-28 sm:w-32 sm:h-32 rounded-full ${scoreBg} flex items-center justify-center`}>
               <div className="text-center">
-                <div className={`text-4xl font-bold ${scoreColor}`}>{overall.score}</div>
+                <div className={`text-3xl sm:text-4xl font-bold ${scoreColor}`}>{overall.score}</div>
                 <div className="text-xs text-muted-foreground mt-1">Overall</div>
               </div>
             </div>
@@ -281,30 +285,32 @@ function PortfolioHealthPanel({ scores }: { scores: HealthScores }) {
           </div>
 
           {/* Individual Metrics */}
-          <ScoreGauge
-            title="Liquidity"
-            score={liquidity.score}
-            explanation={liquidity.explanation}
-            detail={`${liquidity.liquidPercent}% liquid`}
-          />
-          <ScoreGauge
-            title="Concentration"
-            score={concentration.score}
-            explanation={concentration.explanation}
-            detail={`Top: ${concentration.topHoldingPercent}%`}
-          />
-          <ScoreGauge
-            title="Diversification"
-            score={diversification.score}
-            explanation={diversification.explanation}
-            detail={`${diversification.assetClassCount} classes`}
-          />
-          <ScoreGauge
-            title="Volatility"
-            score={volatility.score}
-            explanation={volatility.explanation}
-            detail={`${volatility.maxDrawdown}% max DD`}
-          />
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 flex-1">
+            <ScoreGauge
+              title="Liquidity"
+              score={liquidity.score}
+              explanation={liquidity.explanation}
+              detail={`${liquidity.liquidPercent}% liquid`}
+            />
+            <ScoreGauge
+              title="Concentration"
+              score={concentration.score}
+              explanation={concentration.explanation}
+              detail={`Top: ${concentration.topHoldingPercent}%`}
+            />
+            <ScoreGauge
+              title="Diversification"
+              score={diversification.score}
+              explanation={diversification.explanation}
+              detail={`${diversification.assetClassCount} classes`}
+            />
+            <ScoreGauge
+              title="Volatility"
+              score={volatility.score}
+              explanation={volatility.explanation}
+              detail={`${volatility.maxDrawdown}% max DD`}
+            />
+          </div>
         </div>
       </CardContent>
     </Card>

@@ -235,22 +235,24 @@ export default function DataPage() {
   }
 
   return (
-    <div className="space-y-5">
-      <div className="flex items-center justify-between">
+    <div className="space-y-5 pb-12">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <h1 className="text-page-title">Data</h1>
-        <Button onClick={saveSettings} disabled={saving} className="bg-primary hover:bg-primary/90 text-primary-foreground">
+        <Button onClick={saveSettings} disabled={saving} className="bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto">
           {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Save Data
         </Button>
       </div>
 
       <Tabs defaultValue="general">
-        <TabsList>
-          <TabsTrigger value="general">General</TabsTrigger>
-          <TabsTrigger value="wallets">Wallets</TabsTrigger>
-          <TabsTrigger value="manual">Manual Assets</TabsTrigger>
-          <TabsTrigger value="import">Import Data</TabsTrigger>
-        </TabsList>
+        <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+          <TabsList className="w-full sm:w-auto inline-flex">
+            <TabsTrigger value="general">General</TabsTrigger>
+            <TabsTrigger value="wallets">Wallets</TabsTrigger>
+            <TabsTrigger value="manual">Manual Assets</TabsTrigger>
+            <TabsTrigger value="import">Import</TabsTrigger>
+          </TabsList>
+        </div>
 
         <TabsContent value="general" className="space-y-4">
           <Card className="premium-card">

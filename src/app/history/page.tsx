@@ -245,20 +245,20 @@ export default function HistoryPage() {
 
   return (
     <div className="space-y-5 pb-12">
-      <div className="flex items-center justify-between">
-        <PageHeader
-          title="Portfolio Analytics"
-          subtitle={`Analyzing ${filteredSnapshots.length} snapshots`}
-        />
-        <Button
-          onClick={handleMakeSnapshot}
-          disabled={creatingSnapshot}
-          size="sm"
-        >
-          {creatingSnapshot && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Make Snapshot
-        </Button>
-      </div>
+      <PageHeader
+        title="Portfolio Analytics"
+        subtitle={`Analyzing ${filteredSnapshots.length} snapshots`}
+        rightControls={
+          <Button
+            onClick={handleMakeSnapshot}
+            disabled={creatingSnapshot}
+            size="sm"
+          >
+            {creatingSnapshot && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            Make Snapshot
+          </Button>
+        }
+      />
 
       {/* Key Metrics Row */}
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
@@ -324,9 +324,9 @@ export default function HistoryPage() {
       {/* Main Chart */}
       <Card className="premium-card">
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <CardTitle className="text-section-title">Portfolio Value Over Time</CardTitle>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {timeRangeButtons.map((range) => (
                 <Button
                   key={range}
@@ -602,25 +602,25 @@ export default function HistoryPage() {
                 </div>
               </div>
             </div>
-            <div className="flex items-center justify-center gap-4 mt-4 text-xs text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded bg-red-600"></div>
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-4 text-xs text-muted-foreground">
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 sm:w-4 sm:h-4 rounded bg-red-600"></div>
                 <span>&lt; -10%</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded bg-red-400"></div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 sm:w-4 sm:h-4 rounded bg-red-400"></div>
                 <span>-5% to 0%</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded bg-muted"></div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 sm:w-4 sm:h-4 rounded bg-muted"></div>
                 <span>0%</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded bg-green-400"></div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 sm:w-4 sm:h-4 rounded bg-green-400"></div>
                 <span>0% to 5%</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded bg-green-600"></div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 sm:w-4 sm:h-4 rounded bg-green-600"></div>
                 <span>&gt; 10%</span>
               </div>
             </div>

@@ -8,15 +8,15 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, subtitle, rightControls }: PageHeaderProps) {
   return (
-    <div className="flex items-start justify-between mb-6">
-      <div>
+    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-6">
+      <div className="min-w-0">
         <h1 className="text-page-title">{title}</h1>
         {subtitle && (
           <p className="text-[13px] text-muted-foreground mt-1.5">{subtitle}</p>
         )}
       </div>
       {rightControls && (
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {rightControls}
         </div>
       )}
