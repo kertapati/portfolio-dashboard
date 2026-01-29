@@ -8,15 +8,31 @@ import { MobileNav } from "@/components/mobile-nav"
 const inter = Inter({ subsets: ["latin"], variable: '--font-inter' })
 
 export const metadata: Metadata = {
-  title: "Portfolio Intelligence Dashboard",
-  description: "Local-first portfolio tracker",
+  title: "Portfolio Dashboard",
+  description: "Local-first portfolio intelligence tracker",
+  manifest: "/manifest.json",
   icons: {
     icon: [
-      { url: '/favicon.ico' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icons/icon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [
+      { url: '/icons/apple-touch-icon.png', sizes: '180x180' },
     ],
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Portfolio",
+  },
+}
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#00332B",
 }
 
 const navLinks = [
