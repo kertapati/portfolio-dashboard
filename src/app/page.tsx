@@ -9,6 +9,7 @@ import { SummaryTile } from '@/components/ui/summary-tile'
 import { SectionHeader } from '@/components/ui/section-header'
 import { Tag } from '@/components/ui/tag'
 import { AllocationDonut } from '@/components/ui/allocation-donut'
+import { InvestmentJournal } from '@/components/ui/investment-journal'
 import { DataTable, DataTableHeader, DataTableBody, DataTableFooter, DataTableRow, DataTableHead, DataTableCell } from '@/components/ui/data-table'
 import { formatCurrency, formatPercent } from '@/lib/utils'
 import { SnapshotWithHoldings, TopExposure, ManualAssetItem, WalletWithAllowlist } from '@/types'
@@ -818,6 +819,9 @@ export default function DashboardPage() {
           />
         </div>
       </div>
+
+      {/* Investment Journal & Trade Ideas */}
+      <InvestmentJournal />
 
       {/* Risk Flags */}
       {concentrationWarnings.length > 0 && (

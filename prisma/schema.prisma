@@ -118,3 +118,11 @@ model Brief {
 
   @@index([createdAt])
 }
+
+model JournalEntry {
+  id        String   @id @default(cuid())
+  assetName String
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
